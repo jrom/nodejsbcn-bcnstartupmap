@@ -1,9 +1,16 @@
 Barcelona Startup Map
 =====================
-
 bcnstartupmap started as an introduction to node.js session. It demonstrated how to set up a simple Express 3 node.js app with a few libraries, GET, POST and an AJAX request. A CouchDB is required to run the demo.
 
-### CouchDB view: startups/view 
+Install
+-------
+    npm install
+    
+Go to http://mapbox.com, sign up, create a map and click 'embed' to get the Map-Id to insert in /views/index.html
+
+Get a CouchDB at http://www.iriscouch.com or install the Apache CouchDB locally. Go to localhost or youririscouch.com/iriscouch.com/_utils/index.html and create a database called 'startup', on the right, open the dropdown and click 'Temporary Views', insert the code below and save as 'startups', 'index'.
+
+### CouchDB view: startups/index 
     function(doc) {
       if(doc.jsonType == 'startup') {
         emit(doc.name, doc);
