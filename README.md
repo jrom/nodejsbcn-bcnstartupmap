@@ -186,3 +186,5 @@ Please feel free to fork and contribute to this project so we can generate a ful
 Services
 --------
 The demo uses a CouchDB provided by [iriscouch](http://iriscouch.com/) and [MapBox](http://mapbox.com) for map services.
+
+:trollface:
