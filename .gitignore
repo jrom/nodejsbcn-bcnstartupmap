@@ -3,4 +3,5 @@
 *.log
 *.esproj
 *.nodemonignore
+presentation
 node_modules

@@ -37,7 +37,8 @@ exports.locations = function(req, res) {
       callback(null, startups)
     }, function(error) {
       if(!error) {
-        res.json(startups);
+        res.send(500)
+        //res.json(startups);
       } else {
         res.json([]);
       }
