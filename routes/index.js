@@ -1,4 +1,4 @@
-var nano = require('nano')('http://yourcouch.iriscouch.com:5984')
+var nano = require('nano')('http://localhost:5984')
   , db = nano.db.use('startups')
   , crypto = require('crypto')
   , async = require('async');
@@ -36,7 +36,6 @@ exports.locations = function(req, res) {
       startups.push(startup);
       callback(null, startups)
     }, function(error) {
-      console.log('done');
       if(!error) {
         res.json(startups);
       } else {
@@ -75,6 +74,18 @@ exports.signup = function(req, res) {
   res.render('signup');
 }
 
+exports.deleteUser = function(req, res) {
+  db.head('user:'+req.params.id, function(error, body, head) {
+    db.destroy('user:'+req.params.id, head.etag.substring(1, head.etag.length-1), function(error, result) {
+      if(!error) {
+        res.send(200)
+      } else {
+        res.send(500)
+      }
+    });
+  })
+}
+
 exports.register = function(req, res) {
   var user = {
     jsonType: 'user',
@@ -84,10 +95,12 @@ exports.register = function(req, res) {
     updated_at: new Date()
   };
   db.insert(user, 'user:'+user.username, function(error, result) {
-    console.log(error, result);
-    req.logIn(user, function(error) {
-      console.log(error);
-      res.redirect('/');
-    });
+    if(!error) {
+      req.logIn(user, function(error) {
+        res.redirect('/');
+      });
+    } else {
+      res.send(error.status_code)
+    }
   });
 }
